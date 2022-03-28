@@ -48,14 +48,14 @@ const app = Vue.createApp({
   <div class="card-body">
     <h5 class="card-title">Impuesto</h5>
     <h6 class="card-subtitle mb-2 text-muted">Valor del impuesto a pagar</h6>
-    <h6 class="card-text">$ {{impuesto}}</h6>
+    <h6 class="card-text" id="resultado_impuesto">$ {{impuesto}}</h6>
   </div>
 </div>
 <div class="card" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title">Saldo Restante</h5>
     <h6 class="card-subtitle mb-2 text-muted">Tu saldo restante</h6>
-    <h6 class="card-text">$ {{saldo}}</h6>
+    <h6 class="card-text" id="resultado_saldo">$ {{saldo}}</h6>
   </div>
   </div>
   </div>
