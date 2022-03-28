@@ -1,7 +1,10 @@
 package com.devops.dxc.devops.model;
 
+import org.springframework.stereotype.Service;
+
 import java.io.Serializable;
 
+@Service
 public class Dxc implements Serializable{
 
 	/**
