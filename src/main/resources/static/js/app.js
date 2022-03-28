@@ -3,8 +3,6 @@ import store from "./module.js";
 const store2 = Vuex.createStore({
     modules: {
         dxc: store
-        //Podemos agregar todos los modulos que requeramos por ejemplo:
-        //auth: authStore
     }
 })
 const app = Vue.createApp({
@@ -21,13 +19,11 @@ const app = Vue.createApp({
             saldo: Vue.computed(() => store2.state.dxc.saldoRestaste),
             isReady: Vue.computed(() => store2.state.dxc.completed),
             isLoad: Vue.computed(() => store2.state.dxc.loading),
-            // increment: () => store2.commit('counter/increment'),
+            ten: Vue.computed(() => store2.state.dxc.ten),
         }
     },  // view
     template: `
-<!--      <span>{{count}}</span>-->
-<!--      <br>-->
-<!--      <button @click="increment">+</button>-->
+
 <form @submit.prevent="doDxc">
 <label for="s" class="form-label">Ingrese Sueldo</label>
   <div class="input-group mb-3">
@@ -58,12 +54,20 @@ const app = Vue.createApp({
     <h6 class="card-text" id="resultado_saldo">$ {{saldo}}</h6>
   </div>
   </div>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Tu 10%</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Tu 10% hoy</h6>
+    <h6 class="card-text" id="resultado_diez">$ {{ten}}</h6>
   </div>
+ </div>
+</div>
   <div class="d-flex justify-content-center" v-if="isLoad">
   <div class="spinner-border" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>
-</div>
+  </div>
+
     `,
 
 }).use(store2)

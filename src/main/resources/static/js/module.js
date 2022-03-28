@@ -5,7 +5,8 @@ const store = {
         impuesto: null,
         saldoRestaste: null,
         completed: null,
-        loading: null
+        loading: null,
+        ten: null,
 
     }),
     mutations: {
@@ -21,6 +22,9 @@ const store = {
         handlerLoading(state, value) {
             state.loading = value
         },
+        handlerTen(state, value) {
+            state.ten = value
+        },
 
     },
     actions: {
@@ -31,6 +35,7 @@ const store = {
                 const {sueldo, ahorro} = dxc
                 const retiroResponse = await axios.get('/rest/msdxc/dxc', {params: {sueldo: sueldo, ahorro: ahorro}});
                 console.log("retiro: ", retiroResponse.data)
+                commit('handlerTen', retiroResponse.data)
                 const impuestoResponse = await axios.get('/rest/msdxc/impuesto', {
                     params: {
                         sueldo: sueldo,
@@ -41,7 +46,7 @@ const store = {
                 commit('handlerImpuesto', impuestoResponse.data)
 
                 const saldoRestante = await axios.get('/rest/msdxc/saldoRestante', {params: {ahorro: ahorro}});
-                console.log("impuesto: ", saldoRestante.data)
+                console.log("saldoRestante: ", saldoRestante.data)
                 commit('handlerSaldoRestante', saldoRestante.data)
                 commit('handlerLoading', false);
                 commit('handlerCompleted', true);
