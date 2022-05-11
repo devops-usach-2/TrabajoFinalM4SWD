@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Compile') {
+            steps {
+                script {
+                    sh './mvnw clean compile -e'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    sh './mvnw clean test -e'
+                }
+            }
+        }
+        stage('newman_postman') {
+            steps {
+                script {
+                    sh 'newman run microservicio_retiro_afp_grupo_1.postman_collection.json'
+                }
+            }
+        }
+    }
+}
