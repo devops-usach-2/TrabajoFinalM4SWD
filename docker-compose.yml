@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  app:
+    build: .
+    image: usach
+    environment:
+      - SPRING_APP_NAME=${APP_NAME}

@@ -2,7 +2,9 @@ package com.devops.dxc.devops.model;
 
 import com.devops.dxc.devops.api.UFClient;
 import com.devops.dxc.devops.api.dto.UFClientResponse;
+
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +25,7 @@ public class Util {
      * @return
      */
     public static int getDxc(int ahorro) {
+
         int uf = getUf();
         if (((ahorro * 0.1) / uf) > 150) {
             return (int) (150 * uf);

@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: diez-por-ciento-app
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: diez-por-ciento-app
+  template:
+    metadata:
+      labels:
+        app: diez-por-ciento-app
+    spec:
+      containers:
+        - name: app
+          image: usach:latest
+          imagePullPolicy: Never
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"
+            - name: APP_NAME                #configmap
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-env-pod   #nombre del configmap
+                  key: APP_NAME
+            - name: SECRET_COLOR
+              valueFrom:
+                secretKeyRef:
+                  key: SECRET_COLOR
+                  name: colors              #k create secret generic colors --from-file=./colors.txt
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: 250Mi
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /actuator/info
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 20
+            successThreshold: 1
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+            successThreshold: 1
+          volumeMounts:
+            - name: config-repo-volume
+              mountPath: /config-repo
+      volumes:
+        - name: config-repo-volume
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: usach-app-service
+spec:
+  selector:
+    app: diez-por-ciento-app
+  ports:
+    - port: 80
+      targetPort: 80
+
+

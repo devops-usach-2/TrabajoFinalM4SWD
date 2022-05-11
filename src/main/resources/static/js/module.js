@@ -1,6 +1,6 @@
 const store = {
     namespaced: true,
-    //para retornar el objeto pasamos los parebtesis sobre el objeto
+    //para retornar el objeto pasamos los parentesis sobre el objeto
     state: () => ({
         impuesto: null,
         saldoRestaste: null,

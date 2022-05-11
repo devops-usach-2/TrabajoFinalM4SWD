@@ -1,0 +1,13 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: diez-por-ciento-autoscaling
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1beta1
+    kind: Deployment
+    name: diez-por-ciento-app
+  minReplicas: 2
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 50
